@@ -1,28 +1,25 @@
 import React, { Component } from "react";
-import PropTypes from "prop-types";
 import "./App.css";
 
 class Heading extends Component {
-  static defaultProps = {
-    title: "hello, world",
-  };
+  constructor() {
+    super();
 
-  static propTypes = {
-    title: PropTypes.string.isRequired,
-  };
+    this.state = {
+      title: "hello, world",
+    };
+  }
 
   render() {
-    return <h1>{this.props.title}</h1>;
+    return <h1>{this.state.title}</h1>;
   }
 }
 
 class App extends Component {
   render() {
-    const arrayOfNumbers = [1, 2, 3];
-
     return (
       <div className="App">
-        <Heading title={arrayOfNumbers} />
+        <Heading />
       </div>
     );
   }
