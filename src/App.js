@@ -2,9 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import "./App.css";
 
-const Heading = (props) => {
-  const { title } = props;
-
+const Heading = ({ title }) => {
   return <h1>{title}</h1>;
 };
 
@@ -20,11 +18,10 @@ const App = () => {
   const state = {
     title: "hello, world",
   };
-  const { title } = state;
 
   return (
     <div className="App">
-      <Heading title={title} />
+      <Heading {...state} />
     </div>
   );
 };
