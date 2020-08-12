@@ -7,7 +7,9 @@ class Heading extends Component {
   };
 
   render() {
-    return <h1>{this.state.title}</h1>;
+    const { title } = this.state;
+
+    return <h1>{title}</h1>;
   }
 }
 
