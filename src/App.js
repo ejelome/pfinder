@@ -1,14 +1,12 @@
-import React, { createElement, Component } from "react";
+import React from "react";
 import "./App.css";
 
-class App extends Component {
-  render() {
-    return createElement(
-      "div",
-      { className: "App" },
-      createElement("h1", null, "hello, world")
-    );
-  }
-}
+const App = () => {
+  return (
+    <div className="App">
+      <h1>hello, world</h1>
+    </div>
+  );
+};
 
 export default App;
