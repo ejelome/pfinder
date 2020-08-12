@@ -8,10 +8,19 @@ class App extends Component {
 
   render() {
     const greeting = "hello";
+    const upper = true;
+
+    if (upper) {
+      return (
+        <div className="App">
+          <h1>{this.say(greeting).toUpperCase()}</h1>
+        </div>
+      );
+    }
 
     return (
       <div className="App">
-        <h1>{this.say(greeting).toUpperCase()}</h1>
+        <h1>{this.say(greeting)}</h1>
       </div>
     );
   }
