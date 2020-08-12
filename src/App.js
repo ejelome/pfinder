@@ -12,7 +12,9 @@ class App extends Component {
 
     return (
       <div className="App">
-        <h1>{upper ? this.say(greeting).toUpperCase() : this.say(greeting)}</h1>
+        <h1>
+          {(upper && this.say(greeting).toUpperCase()) || this.say(greeting)}
+        </h1>
       </div>
     );
   }
