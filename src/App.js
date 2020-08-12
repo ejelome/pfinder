@@ -1,12 +1,12 @@
-import React, { Component } from "react";
+import React, { createElement, Component } from "react";
 import "./App.css";
 
 class App extends Component {
   render() {
-    return (
-      <div className="App">
-        <h1>hello, world</h1>
-      </div>
+    return createElement(
+      "div",
+      { className: "App" },
+      createElement("h1", null, "hello, world")
     );
   }
 }
