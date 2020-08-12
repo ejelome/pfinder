@@ -1,26 +1,32 @@
-import React, { Component } from "react";
+import React from "react";
+import PropTypes from "prop-types";
 import "./App.css";
 
-class Heading extends Component {
-  state = {
+const Heading = (props) => {
+  const { title } = props;
+
+  return <h1>{title}</h1>;
+};
+
+Heading.defaultProps = {
+  title: "hello, world",
+};
+
+Heading.propTypes = {
+  title: PropTypes.string.isRequired,
+};
+
+const App = () => {
+  const state = {
     title: "hello, world",
   };
+  const { title } = state;
 
-  render() {
-    const { title } = this.state;
-
-    return <h1>{title}</h1>;
-  }
-}
-
-class App extends Component {
-  render() {
-    return (
-      <div className="App">
-        <Heading />
-      </div>
-    );
-  }
-}
+  return (
+    <div className="App">
+      <Heading title={title} />
+    </div>
+  );
+};
 
 export default App;
