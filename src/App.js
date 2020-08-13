@@ -1,6 +1,15 @@
 import React, { Component } from "react";
 import "./App.css";
 
+class Spinner extends Component {
+  render() {
+    const { src } = this.props;
+    const imagePath = `${process.env.PUBLIC_URL}/${src}`;
+
+    return <img alt="" src={imagePath} />;
+  }
+}
+
 class Heading extends Component {
   render() {
     const { title } = this.props;
@@ -11,6 +20,7 @@ class Heading extends Component {
 class App extends Component {
   state = {
     post: {},
+    loading: true,
   };
 
   async componentDidMount() {
@@ -18,15 +28,16 @@ class App extends Component {
     const response = await fetch(url);
     const post = await response.json();
 
-    this.setState({ post });
+    this.setState({ post, loading: false });
   }
 
   render() {
-    const { post } = this.state;
+    const { loading, post } = this.state;
+    const imagePath = "spinner.gif";
 
     return (
       <div className="App">
-        <Heading {...post} />
+        {loading ? <Spinner src={imagePath} /> : <Heading {...post} />}
       </div>
     );
   }
