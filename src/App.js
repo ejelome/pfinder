@@ -1,47 +1,39 @@
 import React, { Component } from "react";
 import "./App.css";
 
-class Spinner extends Component {
-  render() {
-    const { src } = this.props;
-    const imagePath = `${process.env.PUBLIC_URL}/${src}`;
+class SearchForm extends Component {
+  state = {
+    search: "",
+  };
 
-    return <img alt="" src={imagePath} />;
-  }
-}
+  onChange = (e) => {
+    const { name, value } = e.target;
 
-class Heading extends Component {
+    this.setState({ [name]: value });
+  };
+
   render() {
-    const { title } = this.props;
-    return <h1>{title}</h1>;
+    const { search } = this.state;
+
+    return (
+      <form action="get">
+        <input
+          name="search"
+          type="search"
+          value={search}
+          onChange={this.onChange}
+        />
+        <input name="submit" type="submit" value="Search" />
+      </form>
+    );
   }
 }
 
 class App extends Component {
-  state = {
-    post: {},
-    loading: true,
-  };
-
-  async componentDidMount() {
-    const url = "https://jsonplaceholder.typicode.com/posts/1";
-    const response = await fetch(url);
-    const post = await response.json();
-
-    this.setState({ post, loading: false });
-  }
-
   render() {
-    const { loading, post } = this.state;
-    const imagePath = "spinner.gif";
-
-    const SECRET_KEY = process.env.REACT_APP_SECRET_KEY;
-    const SECRET_PASSWORD = process.env.REACT_APP_SECRET_PASSWORD;
-    console.log([SECRET_KEY, SECRET_PASSWORD]);
-
     return (
       <div className="App">
-        {loading ? <Spinner src={imagePath} /> : <Heading {...post} />}
+        <SearchForm />
       </div>
     );
   }
