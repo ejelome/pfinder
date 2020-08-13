@@ -32,6 +32,9 @@ class SearchForm extends Component {
           onChange={this.onChange}
         />
         <input name="submit" type="submit" value="Search" />
+        <button type="button" onClick={this.props.clearPosts}>
+          Clear
+        </button>
       </form>
     );
   }
@@ -67,12 +70,17 @@ class App extends Component {
     this.setState({ posts });
   };
 
+  clearPosts = () => this.setState({ posts: [] });
+
   render() {
     const { posts } = this.state;
 
     return (
       <div className="App">
-        <SearchForm searchPosts={this.searchPosts} />
+        <SearchForm
+          searchPosts={this.searchPosts}
+          clearPosts={this.clearPosts}
+        />
         <Posts title="Posts" posts={posts} />
       </div>
     );
