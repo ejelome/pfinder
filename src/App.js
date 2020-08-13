@@ -13,11 +13,12 @@ class App extends Component {
     post: {},
   };
 
-  componentDidMount() {
+  async componentDidMount() {
     const url = "https://jsonplaceholder.typicode.com/posts/1";
-    fetch(url)
-      .then((response) => response.json())
-      .then((post) => this.setState({ post }));
+    const response = await fetch(url);
+    const post = await response.json();
+
+    this.setState({ post });
   }
 
   render() {
