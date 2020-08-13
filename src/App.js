@@ -16,12 +16,14 @@ class SearchForm extends Component {
     e.preventDefault();
 
     const { search } = this.state;
+    const { searchPosts } = this.props;
 
-    this.props.searchPosts(search);
+    searchPosts(search);
   };
 
   render() {
     const { search } = this.state;
+    const { clearPosts, showClear } = this.props;
 
     return (
       <form onSubmit={this.onSubmit} action="get">
@@ -32,9 +34,12 @@ class SearchForm extends Component {
           onChange={this.onChange}
         />
         <input name="submit" type="submit" value="Search" />
-        <button type="button" onClick={this.props.clearPosts}>
-          Clear
-        </button>
+
+        {showClear && (
+          <button type="button" onClick={clearPosts}>
+            Clear
+          </button>
+        )}
       </form>
     );
   }
@@ -74,12 +79,14 @@ class App extends Component {
 
   render() {
     const { posts } = this.state;
+    const showClear = posts.length ? true : false;
 
     return (
       <div className="App">
         <SearchForm
           searchPosts={this.searchPosts}
           clearPosts={this.clearPosts}
+          showClear={showClear}
         />
         <Posts title="Posts" posts={posts} />
       </div>
