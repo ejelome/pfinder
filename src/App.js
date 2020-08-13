@@ -35,6 +35,10 @@ class App extends Component {
     const { loading, post } = this.state;
     const imagePath = "spinner.gif";
 
+    const SECRET_KEY = process.env.REACT_APP_SECRET_KEY;
+    const SECRET_PASSWORD = process.env.REACT_APP_SECRET_PASSWORD;
+    console.log([SECRET_KEY, SECRET_PASSWORD]);
+
     return (
       <div className="App">
         {loading ? <Spinner src={imagePath} /> : <Heading {...post} />}
