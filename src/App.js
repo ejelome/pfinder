@@ -12,11 +12,19 @@ class SearchForm extends Component {
     this.setState({ [name]: value });
   };
 
+  onSubmit = (e) => {
+    e.preventDefault();
+
+    const { search } = this.state;
+
+    this.props.searchPosts(search);
+  };
+
   render() {
     const { search } = this.state;
 
     return (
-      <form action="get">
+      <form onSubmit={this.onSubmit} action="get">
         <input
           name="search"
           type="search"
@@ -29,11 +37,43 @@ class SearchForm extends Component {
   }
 }
 
-class App extends Component {
+class Posts extends Component {
   render() {
+    const { title, posts } = this.props;
+
+    return (
+      <div className="posts">
+        <h2>{title}</h2>
+        <ul>
+          {posts.map(({ id, title }) => (
+            <li key={id}>{title}</li>
+          ))}
+        </ul>
+      </div>
+    );
+  }
+}
+
+class App extends Component {
+  state = {
+    posts: [],
+  };
+
+  searchPosts = async (search) => {
+    const url = `https://jsonplaceholder.typicode.com/posts?q=${search}`;
+    const response = await fetch(url);
+    const posts = await response.json();
+
+    this.setState({ posts });
+  };
+
+  render() {
+    const { posts } = this.state;
+
     return (
       <div className="App">
-        <SearchForm />
+        <SearchForm searchPosts={this.searchPosts} />
+        <Posts title="Posts" posts={posts} />
       </div>
     );
   }
