@@ -58,7 +58,9 @@ class Posts extends Component {
         <h2>{title}</h2>
         <ul>
           {posts.map(({ id, title }) => (
-            <li key={id}>{title}</li>
+            <li key={id}>
+              <Link to={`/posts/${id}`}>{title}</Link>
+            </li>
           ))}
         </ul>
       </div>
@@ -79,11 +81,21 @@ class Alert extends Component {
 }
 
 class Post extends Component {
+  componentDidMount() {
+    const { getPost } = this.props;
+    const { id } = this.props.match.params;
+
+    getPost(id);
+  }
+
   render() {
+    const { post } = this.props;
+    const { title, body } = post;
+
     return (
       <Fragment>
-        <h1>Post</h1>
-        <p>I am a paragraph.</p>
+        <h1>{title}</h1>
+        <p>{body}</p>
       </Fragment>
     );
   }
@@ -96,9 +108,6 @@ class NavBar extends Component {
         <li>
           <Link to="/">Home</Link>
         </li>
-        <li>
-          <Link to="/post">Post</Link>
-        </li>
       </ul>
     );
   }
@@ -106,8 +115,9 @@ class NavBar extends Component {
 
 class App extends Component {
   state = {
-    posts: [],
     alert: null,
+    posts: [],
+    post: {},
   };
 
   searchPosts = async (search) => {
@@ -128,8 +138,16 @@ class App extends Component {
     setTimeout(() => this.setState({ alert: null }), duration);
   };
 
+  getPost = async (id) => {
+    const url = `https://jsonplaceholder.typicode.com/posts/${id}`;
+    const response = await fetch(url);
+    const post = await response.json();
+
+    this.setState({ post });
+  };
+
   render() {
-    const { alert, posts } = this.state;
+    const { alert, posts, post } = this.state;
     const showClear = posts.length ? true : false;
 
     return (
@@ -153,7 +171,13 @@ class App extends Component {
                 </Fragment>
               )}
             />
-            <Route exact path="/post" component={Post} />
+            <Route
+              exact
+              path="/posts/:id"
+              render={(props) => (
+                <Post {...props} getPost={this.getPost} post={post} />
+              )}
+            />
           </Switch>
         </div>
       </Router>
