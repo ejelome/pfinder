@@ -2,19 +2,8 @@ import React, { Component, Fragment } from "react";
 import { BrowserRouter as Router, Link, Route, Switch } from "react-router-dom";
 import Search from "./components/layouts/Search";
 import Posts from "./components/posts/Posts";
+import Alert from "./components/alerts/Alert";
 import "./App.css";
-
-class Alert extends Component {
-  render() {
-    const { alert } = this.props;
-
-    return (
-      alert && (
-        <div className={`alert alert-${alert.type}`}>{alert.message}</div>
-      )
-    );
-  }
-}
 
 class Post extends Component {
   componentDidMount() {
@@ -51,7 +40,7 @@ class NavBar extends Component {
 
 class App extends Component {
   state = {
-    alert: null,
+    alert: {},
     posts: [],
     post: {},
   };
@@ -71,7 +60,7 @@ class App extends Component {
 
     const duration = 3000;
 
-    setTimeout(() => this.setState({ alert: null }), duration);
+    setTimeout(() => this.setState({ alert: {} }), duration);
   };
 
   getPost = async (id) => {
