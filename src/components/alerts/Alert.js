@@ -1,24 +1,18 @@
-import React, { Component } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 
-class Alert extends Component {
-  state = {};
+const Alert = ({ alert }) => {
+  return (
+    Boolean(Object.keys(alert).length) && (
+      <div className={`alert alert-${alert.type}`}>{alert.message}</div>
+    )
+  );
+};
 
-  static defaultProps = {};
+Alert.defaultProps = {};
 
-  static propTypes = {
-    alert: PropTypes.object.isRequired,
-  };
-
-  render() {
-    const { alert } = this.props;
-
-    return (
-      Boolean(Object.keys(alert).length) && (
-        <div className={`alert alert-${alert.type}`}>{alert.message}</div>
-      )
-    );
-  }
-}
+Alert.propTypes = {
+  alert: PropTypes.object.isRequired,
+};
 
 export default Alert;
