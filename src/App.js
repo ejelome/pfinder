@@ -1,26 +1,8 @@
 import React, { Component, Fragment } from "react";
 import { BrowserRouter as Router, Link, Route, Switch } from "react-router-dom";
 import Search from "./components/layouts/Search";
+import Posts from "./components/posts/Posts";
 import "./App.css";
-
-class Posts extends Component {
-  render() {
-    const { title, posts } = this.props;
-
-    return (
-      <div className="posts">
-        <h2>{title}</h2>
-        <ul>
-          {posts.map(({ id, title }) => (
-            <li key={id}>
-              <Link to={`/posts/${id}`}>{title}</Link>
-            </li>
-          ))}
-        </ul>
-      </div>
-    );
-  }
-}
 
 class Alert extends Component {
   render() {
