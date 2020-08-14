@@ -78,6 +78,17 @@ class Alert extends Component {
   }
 }
 
+class Post extends Component {
+    render() {
+        return (
+            <Fragment>
+              <h1>Post</h1>
+              <p>I am a paragraph.</p>
+            </Fragment>
+        );
+    }
+}
+
 class App extends Component {
   state = {
     posts: [],
@@ -126,6 +137,7 @@ class App extends Component {
                 </Fragment>
               )}
             />
+            <Route exact path="/post" component={Post} />
           </Switch>
         </div>
       </Router>
