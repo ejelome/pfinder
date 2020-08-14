@@ -24,7 +24,7 @@ class App extends Component {
 
   clearPosts = () => this.setState({ posts: [] });
 
-  setAlert = (message, type) => {
+  showAlert = (message, type) => {
     this.setState({ alert: { message, type } });
 
     const duration = 3000;
@@ -59,7 +59,7 @@ class App extends Component {
                     searchPosts={this.searchPosts}
                     clearPosts={this.clearPosts}
                     showClear={showClear}
-                    setAlert={this.setAlert}
+                    showAlert={this.showAlert}
                   />
                   <Posts title="Posts" posts={posts} />
                 </Fragment>
