@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from "react";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { BrowserRouter as Router, Link, Route, Switch } from "react-router-dom";
 import "./App.css";
 
 class SearchForm extends Component {
@@ -79,14 +79,29 @@ class Alert extends Component {
 }
 
 class Post extends Component {
-    render() {
-        return (
-            <Fragment>
-              <h1>Post</h1>
-              <p>I am a paragraph.</p>
-            </Fragment>
-        );
-    }
+  render() {
+    return (
+      <Fragment>
+        <h1>Post</h1>
+        <p>I am a paragraph.</p>
+      </Fragment>
+    );
+  }
+}
+
+class NavBar extends Component {
+  render() {
+    return (
+      <ul>
+        <li>
+          <Link to="/">Home</Link>
+        </li>
+        <li>
+          <Link to="/post">Post</Link>
+        </li>
+      </ul>
+    );
+  }
 }
 
 class App extends Component {
@@ -120,6 +135,7 @@ class App extends Component {
     return (
       <Router>
         <div className="App">
+          <NavBar />
           <Switch>
             <Route
               exact
