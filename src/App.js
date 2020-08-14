@@ -1,22 +1,11 @@
 import React, { Component, Fragment } from "react";
-import { BrowserRouter as Router, Link, Route, Switch } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import NavBar from "./components/layouts/NavBar";
 import Search from "./components/layouts/Search";
 import Posts from "./components/posts/Posts";
 import Post from "./components/posts/Post";
 import Alert from "./components/alerts/Alert";
 import "./App.css";
-
-class NavBar extends Component {
-  render() {
-    return (
-      <ul>
-        <li>
-          <Link to="/">Home</Link>
-        </li>
-      </ul>
-    );
-  }
-}
 
 class App extends Component {
   state = {
