@@ -16,9 +16,12 @@ class SearchForm extends Component {
     e.preventDefault();
 
     const { search } = this.state;
-    const { searchPosts } = this.props;
+    const { searchPosts, setAlert } = this.props;
 
-    searchPosts(search);
+    const message = "Please enter a keyword";
+    const type = "danger";
+
+    search ? searchPosts(search) : setAlert(message, type);
   };
 
   render() {
@@ -62,9 +65,22 @@ class Posts extends Component {
   }
 }
 
+class Alert extends Component {
+  render() {
+    const { alert } = this.props;
+
+    return (
+      alert && (
+        <div className={`alert alert-${alert.type}`}>{alert.message}</div>
+      )
+    );
+  }
+}
+
 class App extends Component {
   state = {
     posts: [],
+    alert: null,
   };
 
   searchPosts = async (search) => {
@@ -77,16 +93,26 @@ class App extends Component {
 
   clearPosts = () => this.setState({ posts: [] });
 
+  setAlert = (message, type) => {
+    this.setState({ alert: { message, type } });
+
+    const duration = 3000;
+
+    setTimeout(() => this.setState({ alert: null }), duration);
+  };
+
   render() {
-    const { posts } = this.state;
+    const { alert, posts } = this.state;
     const showClear = posts.length ? true : false;
 
     return (
       <div className="App">
+        <Alert alert={alert} />
         <SearchForm
           searchPosts={this.searchPosts}
           clearPosts={this.clearPosts}
           showClear={showClear}
+          setAlert={this.setAlert}
         />
         <Posts title="Posts" posts={posts} />
       </div>
