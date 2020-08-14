@@ -1,4 +1,5 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import "./App.css";
 
 class SearchForm extends Component {
@@ -106,16 +107,28 @@ class App extends Component {
     const showClear = posts.length ? true : false;
 
     return (
-      <div className="App">
-        <Alert alert={alert} />
-        <SearchForm
-          searchPosts={this.searchPosts}
-          clearPosts={this.clearPosts}
-          showClear={showClear}
-          setAlert={this.setAlert}
-        />
-        <Posts title="Posts" posts={posts} />
-      </div>
+      <Router>
+        <div className="App">
+          <Switch>
+            <Route
+              exact
+              path="/"
+              render={(props) => (
+                <Fragment>
+                  <Alert alert={alert} />
+                  <SearchForm
+                    searchPosts={this.searchPosts}
+                    clearPosts={this.clearPosts}
+                    showClear={showClear}
+                    setAlert={this.setAlert}
+                  />
+                  <Posts title="Posts" posts={posts} />
+                </Fragment>
+              )}
+            />
+          </Switch>
+        </div>
+      </Router>
     );
   }
 }
