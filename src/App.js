@@ -2,29 +2,9 @@ import React, { Component, Fragment } from "react";
 import { BrowserRouter as Router, Link, Route, Switch } from "react-router-dom";
 import Search from "./components/layouts/Search";
 import Posts from "./components/posts/Posts";
+import Post from "./components/posts/Post";
 import Alert from "./components/alerts/Alert";
 import "./App.css";
-
-class Post extends Component {
-  componentDidMount() {
-    const { getPost } = this.props;
-    const { id } = this.props.match.params;
-
-    getPost(id);
-  }
-
-  render() {
-    const { post } = this.props;
-    const { title, body } = post;
-
-    return (
-      <Fragment>
-        <h1>{title}</h1>
-        <p>{body}</p>
-      </Fragment>
-    );
-  }
-}
 
 class NavBar extends Component {
   render() {
