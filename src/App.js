@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from "react";
+import React, { Fragment, useState } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import NavBar from "./components/layouts/NavBar";
 import Search from "./components/layouts/Search";
@@ -7,76 +7,71 @@ import Post from "./components/posts/Post";
 import Alert from "./components/alerts/Alert";
 import "./App.css";
 
-class App extends Component {
-  state = {
-    alert: {},
-    posts: [],
-    post: {},
-  };
+const App = () => {
+  const [alert, setAlert] = useState({});
+  const [posts, setPosts] = useState([]);
+  const [post, setPost] = useState({});
 
-  searchPosts = async (search) => {
+  const searchPosts = async (search) => {
     const url = `https://jsonplaceholder.typicode.com/posts?q=${search}`;
     const response = await fetch(url);
     const posts = await response.json();
 
-    this.setState({ posts });
+    setPosts(posts);
   };
 
-  clearPosts = () => this.setState({ posts: [] });
+  const clearPosts = () => setPosts([]);
 
-  showAlert = (message, type) => {
-    this.setState({ alert: { message, type } });
+  const showAlert = (message, type) => {
+    setAlert({ alert: { message, type } });
 
     const duration = 3000;
 
-    setTimeout(() => this.setState({ alert: {} }), duration);
+    setTimeout(() => setAlert({}), duration);
   };
 
-  getPost = async (id) => {
+  const getPost = async (id) => {
     const url = `https://jsonplaceholder.typicode.com/posts/${id}`;
     const response = await fetch(url);
     const post = await response.json();
 
-    this.setState({ post });
+    setPost(post);
   };
 
-  render() {
-    const { alert, posts, post } = this.state;
-    const showClear = posts.length ? true : false;
+  const showClear = posts.length ? true : false;
 
-    return (
-      <Router>
-        <div className="App">
-          <NavBar />
-          <Switch>
-            <Route
-              exact
-              path="/"
-              render={(props) => (
-                <Fragment>
-                  <Alert alert={alert} />
-                  <Search
-                    searchPosts={this.searchPosts}
-                    clearPosts={this.clearPosts}
-                    showClear={showClear}
-                    showAlert={this.showAlert}
-                  />
-                  <Posts title="Posts" posts={posts} />
-                </Fragment>
-              )}
-            />
-            <Route
-              exact
-              path="/posts/:id"
-              render={(props) => (
-                <Post {...props} getPost={this.getPost} post={post} />
-              )}
-            />
-          </Switch>
-        </div>
-      </Router>
-    );
-  }
-}
+  return (
+    <Router>
+      <div className="App">
+        <NavBar />
+        <Switch>
+          <Route
+            exact
+            path="/"
+            render={(props) => (
+              <Fragment>
+                <Alert alert={alert} />
+                <Search
+                  searchPosts={searchPosts}
+                  clearPosts={clearPosts}
+                  showClear={showClear}
+                  showAlert={showAlert}
+                />
+                <Posts title="Posts" posts={posts} />
+              </Fragment>
+            )}
+          />
+          <Route
+            exact
+            path="/posts/:id"
+            render={(props) => (
+              <Post {...props} getPost={getPost} post={post} />
+            )}
+          />
+        </Switch>
+      </div>
+    </Router>
+  );
+};
 
 export default App;
