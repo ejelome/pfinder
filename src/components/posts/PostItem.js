@@ -1,26 +1,20 @@
-import React, { Component } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 
-class PostItem extends Component {
-  state = {};
+const PostItem = ({ id, title }) => {
+  return (
+    <li className="post-item">
+      <Link to={`/posts/${id}`}>{title}</Link>
+    </li>
+  );
+};
 
-  static defaultProps = {};
+PostItem.defaultProps = {};
 
-  static propTypes = {
-    id: PropTypes.number.isRequired,
-    title: PropTypes.string.isRequired,
-  };
-
-  render() {
-    const { id, title } = this.props;
-
-    return (
-      <li className="post-item">
-        <Link to={`/posts/${id}`}>{title}</Link>
-      </li>
-    );
-  }
-}
+PostItem.propTypes = {
+  id: PropTypes.number.isRequired,
+  title: PropTypes.string.isRequired,
+};
 
 export default PostItem;
