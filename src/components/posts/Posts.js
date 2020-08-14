@@ -1,34 +1,28 @@
-import React, { Component } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import PostItem from "./PostItem";
 
-class Posts extends Component {
-  state = {};
+const Posts = ({ title, posts }) => {
+  return (
+    <div className="posts">
+      <h2>{title}</h2>
+      <ul>
+        {posts.map((post, i) => (
+          <PostItem key={i} {...post} />
+        ))}
+      </ul>
+    </div>
+  );
+};
 
-  static defaultProps = {
-    title: "Posts",
-    posts: [],
-  };
+Posts.defaultProps = {
+  title: "Posts",
+  posts: [],
+};
 
-  static propTypes = {
-    title: PropTypes.string.isRequired,
-    posts: PropTypes.array.isRequired,
-  };
-
-  render() {
-    const { title, posts } = this.props;
-
-    return (
-      <div className="posts">
-        <h2>{title}</h2>
-        <ul>
-          {posts.map((post, i) => (
-            <PostItem key={i} {...post} />
-          ))}
-        </ul>
-      </div>
-    );
-  }
-}
+Posts.propTypes = {
+  title: PropTypes.string.isRequired,
+  posts: PropTypes.array.isRequired,
+};
 
 export default Posts;
