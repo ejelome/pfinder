@@ -1,53 +1,7 @@
 import React, { Component, Fragment } from "react";
 import { BrowserRouter as Router, Link, Route, Switch } from "react-router-dom";
+import Search from "./components/layouts/Search";
 import "./App.css";
-
-class SearchForm extends Component {
-  state = {
-    search: "",
-  };
-
-  onChange = (e) => {
-    const { name, value } = e.target;
-
-    this.setState({ [name]: value });
-  };
-
-  onSubmit = (e) => {
-    e.preventDefault();
-
-    const { search } = this.state;
-    const { searchPosts, setAlert } = this.props;
-
-    const message = "Please enter a keyword";
-    const type = "danger";
-
-    search ? searchPosts(search) : setAlert(message, type);
-  };
-
-  render() {
-    const { search } = this.state;
-    const { clearPosts, showClear } = this.props;
-
-    return (
-      <form onSubmit={this.onSubmit} action="get">
-        <input
-          name="search"
-          type="search"
-          value={search}
-          onChange={this.onChange}
-        />
-        <input name="submit" type="submit" value="Search" />
-
-        {showClear && (
-          <button type="button" onClick={clearPosts}>
-            Clear
-          </button>
-        )}
-      </form>
-    );
-  }
-}
 
 class Posts extends Component {
   render() {
@@ -161,7 +115,7 @@ class App extends Component {
               render={(props) => (
                 <Fragment>
                   <Alert alert={alert} />
-                  <SearchForm
+                  <Search
                     searchPosts={this.searchPosts}
                     clearPosts={this.clearPosts}
                     showClear={showClear}
