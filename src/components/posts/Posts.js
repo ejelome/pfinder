@@ -4,7 +4,7 @@ import { AppContext } from "../../contexts/AppContext";
 
 import PostItem from "./PostItem";
 
-const Posts = () => {
+const Posts = ({ title }) => {
   const appContext = useContext(AppContext);
   const { postsTitle, posts } = appContext;
 

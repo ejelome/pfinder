@@ -1,10 +1,9 @@
 import React, { useContext, useState } from "react";
-import PropTypes from "prop-types";
 
 import { AppContext } from "../../contexts/AppContext";
 import { AlertContext } from "../../contexts/AlertContext";
 
-const Search = ({ clearPosts, showClear }) => {
+const Search = () => {
   const appContext = useContext(AppContext);
   const alertContext = useContext(AlertContext);
   const [search, setSearch] = useState("");
@@ -27,6 +26,10 @@ const Search = ({ clearPosts, showClear }) => {
     search ? searchPosts(search) : setAlert(message, type);
   };
 
+  const { clearPosts, posts } = appContext;
+
+  const showClear = Boolean(Object(posts).length);
+
   return (
     <form className="search" action="" method="" onSubmit={onSubmit}>
       <input name="search" type="search" value={search} onChange={onChange} />
@@ -39,15 +42,6 @@ const Search = ({ clearPosts, showClear }) => {
       )}
     </form>
   );
-};
-
-Search.defaultProps = {
-  showClear: true,
-};
-
-Search.propTypes = {
-  clearPosts: PropTypes.func.isRequired,
-  showClear: PropTypes.bool.isRequired,
 };
 
 export default Search;

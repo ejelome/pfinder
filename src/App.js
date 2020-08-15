@@ -13,10 +13,7 @@ import Post from "./components/posts/Post";
 import "./App.css";
 
 const App = () => {
-  const [posts, setPosts] = useState([]);
   const [post, setPost] = useState({});
-
-  const clearPosts = () => setPosts([]);
 
   const getPost = async (id) => {
     const url = `https://jsonplaceholder.typicode.com/posts/${id}`;
@@ -25,8 +22,6 @@ const App = () => {
 
     setPost(post);
   };
-
-  const showClear = posts.length ? true : false;
 
   return (
     <AppProvider>
@@ -37,11 +32,11 @@ const App = () => {
             <Route
               exact
               path="/"
-              render={(props) => (
+              render={() => (
                 <AlertProvider>
                   <Alert />
-                  <Search clearPosts={clearPosts} showClear={showClear} />
-                  <Posts title="Posts" posts={posts} />
+                  <Search />
+                  <Posts />
                 </AlertProvider>
               )}
             />
