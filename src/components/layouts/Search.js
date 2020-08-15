@@ -1,9 +1,13 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import PropTypes from "prop-types";
 
-const Search = ({ searchPosts, clearPosts, showAlert, showClear }) => {
+import { AppContext } from "../../contexts/AppContext";
+import { AlertContext } from "../../contexts/AlertContext";
+
+const Search = ({ clearPosts, showClear }) => {
+  const appContext = useContext(AppContext);
+  const alertContext = useContext(AlertContext);
   const [search, setSearch] = useState("");
-  const [alert, setAlert] = useState({});
 
   const onChange = (e) => {
     const { value } = e.target;
@@ -13,11 +17,14 @@ const Search = ({ searchPosts, clearPosts, showAlert, showClear }) => {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    setAlert({ message: "Please enter a keyword", type: "danger" });
 
-    const { message, type } = alert;
+    const { setAlert } = alertContext;
+    const { searchPosts } = appContext;
 
-    search ? searchPosts(search) : showAlert(message, type);
+    const message = "Please enter a keyword";
+    const type = "danger";
+
+    search ? searchPosts(search) : setAlert(message, type);
   };
 
   return (
@@ -39,8 +46,6 @@ Search.defaultProps = {
 };
 
 Search.propTypes = {
-  searchPosts: PropTypes.func.isRequired,
-  showAlert: PropTypes.func.isRequired,
   clearPosts: PropTypes.func.isRequired,
   showClear: PropTypes.bool.isRequired,
 };
