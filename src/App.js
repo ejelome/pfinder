@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
 import { AppProvider } from "./contexts/AppContext";
@@ -13,16 +13,6 @@ import Post from "./components/posts/Post";
 import "./App.css";
 
 const App = () => {
-  const [post, setPost] = useState({});
-
-  const getPost = async (id) => {
-    const url = `https://jsonplaceholder.typicode.com/posts/${id}`;
-    const response = await fetch(url);
-    const post = await response.json();
-
-    setPost(post);
-  };
-
   return (
     <AppProvider>
       <Router>
@@ -40,13 +30,7 @@ const App = () => {
                 </AlertProvider>
               )}
             />
-            <Route
-              exact
-              path="/posts/:id"
-              render={(props) => (
-                <Post {...props} getPost={getPost} post={post} />
-              )}
-            />
+            <Route exact path="/posts/:id" component={Post} />
           </Switch>
         </div>
       </Router>

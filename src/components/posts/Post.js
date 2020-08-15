@@ -1,7 +1,12 @@
-import React, { useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 import PropTypes from "prop-types";
 
-const Post = ({ getPost, post, match }) => {
+import { AppContext } from "../../contexts/AppContext";
+
+const Post = ({ match }) => {
+  const appContext = useContext(AppContext);
+  const { getPost, post } = appContext;
+
   useEffect(() => {
     const { id } = match.params;
 
@@ -18,11 +23,7 @@ const Post = ({ getPost, post, match }) => {
   );
 };
 
-Post.defaultProps = {};
-
 Post.propTypes = {
-  getPost: PropTypes.func.isRequired,
-  post: PropTypes.object.isRequired,
   match: PropTypes.shape({
     params: PropTypes.shape({
       id: PropTypes.number.isRequired,

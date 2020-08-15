@@ -1,6 +1,6 @@
 import React, { createContext, useReducer } from "react";
 
-import { SEARCH_POSTS, CLEAR_POSTS } from "../types/appTypes";
+import { SEARCH_POSTS, CLEAR_POSTS, GET_POST } from "../types/appTypes";
 
 export const AppContext = createContext();
 
@@ -19,6 +19,11 @@ export const AppProvider = ({ children }) => {
           ...state,
           posts: [],
         };
+      case "GET_POST":
+        return {
+          ...state,
+          post: payload,
+        };
       default:
         return state;
     }
@@ -27,6 +32,7 @@ export const AppProvider = ({ children }) => {
   const initialState = {
     postsTitle: "Posts",
     posts: [],
+    post: {},
   };
 
   const [state, dispatch] = useReducer(reducer, initialState);
@@ -41,6 +47,14 @@ export const AppProvider = ({ children }) => {
 
   const clearPosts = () => dispatch({ type: CLEAR_POSTS });
 
+  const getPost = async (id) => {
+    const url = `https://jsonplaceholder.typicode.com/posts/${id}`;
+    const response = await fetch(url);
+    const post = await response.json();
+
+    dispatch({ type: GET_POST, payload: post });
+  };
+
   const { Provider } = AppContext;
 
   return (
@@ -50,6 +64,8 @@ export const AppProvider = ({ children }) => {
         posts: state.posts,
         searchPosts,
         clearPosts,
+        post: state.post,
+        getPost,
       }}
     >
       {children}
