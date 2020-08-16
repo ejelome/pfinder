@@ -5,18 +5,14 @@ import { AppContext } from "../../contexts/AppContext";
 import PostItem from "./PostItem";
 
 const Posts = ({ title }) => {
-  const appContext = useContext(AppContext);
-  const { postsTitle, posts } = appContext;
+  const { posts } = useContext(AppContext);
 
   return (
-    <div className="posts">
-      <h2>{postsTitle}</h2>
-      <ul>
-        {posts.map((post, i) => (
-          <PostItem key={i} {...post} />
-        ))}
-      </ul>
-    </div>
+    <ul>
+      {posts.map((post, i) => (
+        <PostItem key={i} {...post} />
+      ))}
+    </ul>
   );
 };
 

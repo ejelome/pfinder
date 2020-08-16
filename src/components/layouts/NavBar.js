@@ -1,27 +1,25 @@
 import React from "react";
-import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 
-const NavBar = ({ links }) => {
+import { NAV_HOME, NAV_ABOUT } from "../../constants";
+
+import Brand from "./Brand";
+
+const NavBar = () => {
+  const navLinks = [NAV_HOME, NAV_ABOUT];
+
   return (
-    <nav className="nav-bar">
+    <nav>
+      <Brand />
       <ul>
-        {links.map(({ title, url }, i) => (
+        {navLinks.map(({ name, path }, i) => (
           <li key={i}>
-            <Link to={url}>{title}</Link>
+            <Link to={path}>{name}</Link>
           </li>
         ))}
       </ul>
     </nav>
   );
-};
-
-NavBar.defaultProps = {
-  links: [{ title: "Home", url: "/" }],
-};
-
-NavBar.propTypes = {
-  links: PropTypes.array.isRequired,
 };
 
 export default NavBar;

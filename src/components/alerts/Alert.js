@@ -3,14 +3,16 @@ import React, { useContext } from "react";
 import { AlertContext } from "../../contexts/AlertContext";
 
 const Alert = () => {
-  const alertContext = useContext(AlertContext);
-  const { alert } = alertContext;
+  const { admonition, message } = useContext(AlertContext);
 
-  return (
-    Boolean(Object.keys(alert).length) && (
-      <div className={`alert alert-${alert.type}`}>{alert.message}</div>
-    )
+  const showAlert = Boolean(admonition.length);
+  const AlertMessage = showAlert && (
+    <div>
+      {`${admonition.charAt(0).toUpperCase()}${admonition.slice(1)}`}! {message}
+    </div>
   );
+
+  return AlertMessage;
 };
 
 export default Alert;

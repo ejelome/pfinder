@@ -1,39 +1,31 @@
 import React, { createContext, useReducer } from "react";
 
-import { SEARCH_POSTS, CLEAR_POSTS, GET_POST } from "../types/appTypes";
+import { SEARCH_POSTS, CLEAR_POSTS, GET_POST } from "../types";
 
 export const AppContext = createContext();
 
 export const AppProvider = ({ children }) => {
-  const reducer = (state, action) => {
-    const { payload, type } = action;
+  const reducer = (state, { payload, type }) => {
+    let { posts, post } = state;
 
     switch (type) {
       case "SEARCH_POSTS":
-        return {
-          ...state,
-          posts: payload,
-        };
+        posts = payload;
+
+        return { ...state, posts };
       case "CLEAR_POSTS":
-        return {
-          ...state,
-          posts: [],
-        };
+        posts = [];
+        return { ...state, posts };
       case "GET_POST":
-        return {
-          ...state,
-          post: payload,
-        };
+        post = payload;
+
+        return { ...state, post };
       default:
         return state;
     }
   };
 
-  const initialState = {
-    postsTitle: "Posts",
-    posts: [],
-    post: {},
-  };
+  const initialState = { postsTitle: "Posts", posts: [], post: {} };
 
   const [state, dispatch] = useReducer(reducer, initialState);
 
@@ -41,8 +33,9 @@ export const AppProvider = ({ children }) => {
     const url = `https://jsonplaceholder.typicode.com/posts?q=${search}`;
     const response = await fetch(url);
     const posts = await response.json();
+    const payload = posts;
 
-    dispatch({ type: SEARCH_POSTS, payload: posts });
+    dispatch({ type: SEARCH_POSTS, payload });
   };
 
   const clearPosts = () => dispatch({ type: CLEAR_POSTS });
@@ -51,26 +44,16 @@ export const AppProvider = ({ children }) => {
     const url = `https://jsonplaceholder.typicode.com/posts/${id}`;
     const response = await fetch(url);
     const post = await response.json();
+    const payload = post;
 
-    dispatch({ type: GET_POST, payload: post });
+    dispatch({ type: GET_POST, payload });
   };
 
   const { Provider } = AppContext;
 
-  return (
-    <Provider
-      value={{
-        postsTitle: state.postsTitle,
-        posts: state.posts,
-        searchPosts,
-        clearPosts,
-        post: state.post,
-        getPost,
-      }}
-    >
-      {children}
-    </Provider>
-  );
+  const actions = { searchPosts, clearPosts, getPost };
+
+  return <Provider value={{ ...state, ...actions }}>{children}</Provider>;
 };
 
 export default AppProvider;

@@ -4,42 +4,35 @@ import { AppContext } from "../../contexts/AppContext";
 import { AlertContext } from "../../contexts/AlertContext";
 
 const Search = () => {
-  const appContext = useContext(AppContext);
-  const alertContext = useContext(AlertContext);
-  const [search, setSearch] = useState("");
+  const { posts, searchPosts, clearPosts } = useContext(AppContext);
+  const { setAlert } = useContext(AlertContext);
 
-  const onChange = (e) => {
-    const { value } = e.target;
+  const defaultSearch = "";
+  const [search, setSearch] = useState(defaultSearch);
 
-    setSearch(value);
-  };
+  const handleChange = ({ target: { value } }) => setSearch(value);
 
-  const onSubmit = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
 
-    const { setAlert } = alertContext;
-    const { searchPosts } = appContext;
-
+    const admonition = "warning";
     const message = "Please enter a keyword";
-    const type = "danger";
 
-    search ? searchPosts(search) : setAlert(message, type);
+    search ? searchPosts(search) : setAlert(admonition, message);
   };
 
-  const { clearPosts, posts } = appContext;
-
   const showClear = Boolean(Object(posts).length);
+  const ClearButton = showClear && (
+    <button type="button" onClick={clearPosts}>
+      Clear
+    </button>
+  );
 
   return (
-    <form className="search" action="" method="" onSubmit={onSubmit}>
-      <input name="search" type="search" value={search} onChange={onChange} />
-      <input name="submit" type="submit" value="Search" />
-
-      {showClear && (
-        <button type="button" onClick={clearPosts}>
-          Clear
-        </button>
-      )}
+    <form onSubmit={handleSubmit}>
+      <input type="search" value={search} onChange={handleChange} />
+      <input type="submit" value="Search" />
+      {ClearButton}
     </form>
   );
 };

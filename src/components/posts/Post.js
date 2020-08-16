@@ -1,25 +1,27 @@
-import React, { useContext, useEffect } from "react";
+import React, { Fragment, useContext, useEffect } from "react";
 import PropTypes from "prop-types";
 
 import { AppContext } from "../../contexts/AppContext";
 
-const Post = ({ match }) => {
-  const appContext = useContext(AppContext);
-  const { getPost, post } = appContext;
+const Post = ({
+  match: {
+    params: { id },
+  },
+}) => {
+  const {
+    post: { title, body },
+    getPost,
+  } = useContext(AppContext);
 
   useEffect(() => {
-    const { id } = match.params;
-
     getPost(id);
   });
 
-  const { title, body } = post;
-
   return (
-    <div className="post">
+    <Fragment>
       <h1>{title}</h1>
       <p>{body}</p>
-    </div>
+    </Fragment>
   );
 };
 
